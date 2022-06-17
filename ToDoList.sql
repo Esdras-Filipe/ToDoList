@@ -1,0 +1,30 @@
+CREATE DATABASE ToDoList;
+
+USE ToDoList;
+
+CREATE TABLE IF NOT EXISTS Usuarios(
+	Id_Usuario INT NOT NULL AUTO_INCREMENT,
+    Nome VARCHAR(80) NOT NULL,
+	Senha VARCHAR(32) NOT NULL,
+    Data_Criacao DATETIME DEFAULT NOW(),
+    PRIMARY KEY (Id_Usuario)
+);
+
+CREATE TABLE IF NOT EXISTS Tarefas(
+	Id_Tarefa INT NOT NULL AUTO_INCREMENT,
+    Nome VARCHAR(80) NOT NULL,
+    Data_Criacao DATETIME DEFAULT NOW(),
+    Status CHAR(1) NOT NULL,
+    Id_Usuario INT NOT NULL,
+    PRIMARY KEY(Id_Tarefa),
+    CONSTRAINT Usuario_Tarefa FOREIGN KEY(Id_Usuario) REFERENCES Usuarios(Id_Usuario) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Itens_Tarefa(
+	Id_Item_Tarefa INT NOT NULL AUTO_INCREMENT,
+    Nome VARCHAR(50) NOT NULL,
+    Status CHAR(1) NOT NULL,
+    Id_Tarefa INT NOT NULL,
+    PRIMARY KEY (Id_Item_Tarefa),
+    CONSTRAINT Id_Tarefa FOREIGN KEY(Id_Tarefa) REFERENCES Tarefas(Id_Tarefa) ON DELETE CASCADE
+);
